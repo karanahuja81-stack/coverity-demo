@@ -16,9 +16,9 @@ jobs:
       - name: Run Coverity Scan via Black Duck Security Scan
         uses: blackduck-inc/black-duck-security-scan@v2.11.0
         with:
-          coverity_url: ${{ vars.COVERITY_URL }}
-          coverity_user: ${{ vars.COV_USER }}
-          coverity_passphrase: ${{ secrets.COVERITY_PASSPHRASE }}
+          coverity_url: ${{vars.COVERITY_URL}}
+          coverity_user: ${{vars.COV_USER}}
+          coverity_passphrase: ${{secrets.COVERITY_PASSPHRASE}}
           
           # Force local analysis mode (required for on-prem/local Coverity Connect)
           coverity_local: true
