@@ -1,0 +1,34 @@
+name: Test Local Coverity Scan
+
+on:
+  workflow_dispatch: # Allows manual trigger from Actions tab
+  push:
+    branches: [ main, master ]
+
+jobs:
+  coverity-scan:
+    runs-on: self-hosted # Targets your local runner
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Run Coverity Scan via Black Duck Security Scan
+        uses: blackduck-inc/black-duck-security-scan@v2.11.0
+        with:
+          coverity_url: ${{ vars.COVERITY_URL }}
+          coverity_user: ${{ vars.COV_USER }}
+          coverity_passphrase: ${{ secrets.COVERITY_PASSPHRASE }}
+          
+          # Force local analysis mode (required for on-prem/local Coverity Connect)
+          coverity_local: true
+          
+          # Define your project and stream name
+          coverity_project_name: "test-github-project"
+          coverity_stream_name: "test-github-stream"
+          
+          # Build capture command (for Java without Maven/Gradle)
+          coverity_build_command: "javac Main.java"
+          
+          # If Coverity Analysis CLI is already installed on this machine, specify path:
+          coverity_installation_dir: "/Applications/cov-analysis-macos-arm-2026.9.0/"
